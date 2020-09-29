@@ -97,7 +97,7 @@ export const getDefaultCidConfig = (payload) => async (dispatch) => {
 
 export const addFileToIPFS = (payload) => async (dispatch) => {
   console.log(payload.fileBuffer);
-  const { cid } = await pow.ffs.addToHot(payload.fileBuffer);
+  const { cid } = await pow.ffs.stage(payload.fileBuffer);
   dispatch({
     type: types.ADD_FILE_TO_IPFS,
     payload: {
@@ -109,9 +109,8 @@ export const addFileToIPFS = (payload) => async (dispatch) => {
 
 export const addFileToFFS = (payload) => async (dispatch) => {
   let jobId;
-
   // First, add the file to IPFS Network
-  const { cid } = await pow.ffs.addToHot(payload.fileBuffer);
+  const { cid } = await pow.ffs.stage(payload.fileBuffer);
   delete payload["fileBuffer"];
   payload.cid = cid;
   payload.newConf.cid = cid;
@@ -119,15 +118,13 @@ export const addFileToFFS = (payload) => async (dispatch) => {
   if (payload.withOverrideConfig) {
     // You want to override the default FFS config with new config
     jobId = (
-      await pow.ffs.pushConfig(
-        payload.cid,
-        ffsOptions.withOverrideConfig(true),
-        ffsOptions.withConfig(payload.newConf)
+      await pow.ffs.pushStorageConfig(
+        payload.cid, { override: true, storageConfig: payload.newConf }
       )
     ).jobId;
   } else {
     // You want to keep the default FFS config
-    jobId = (await pow.ffs.pushConfig(payload.cid)).jobId;
+    jobId = (await pow.ffs.pushStorageConfig(payload.cid)).jobId;
   }
 
   // watch the FFS job status to see the storage process progressing

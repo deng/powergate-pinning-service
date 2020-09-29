@@ -1,6 +1,6 @@
 import {
   createPow,
-  ffsOptions as Options,
+  PushStorageConfigOptions as Options,
   ffsTypes as Types,
 } from "@textile/powergate-client";
 var pow;
@@ -13,7 +13,7 @@ export const getPowergateInstance = () => {
     return pow;
   } else {
     // Create a new powergate instance
-    pow = createPow({ POW_HOST });
+    pow = createPow({ host: POW_HOST });
     return pow;
   }
 };

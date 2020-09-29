@@ -71,7 +71,7 @@ function Pin(props) {
               name="Add to Public IPFS Network"
               value="Yes"
             />{" "}
-            <label for="enablePublicIPFS"> Add to Public IPFS Network</label>
+            <label htmlFor="enablePublicIPFS"> Add to Public IPFS Network</label>
             <br></br>
             <div id="ipfsOptions">
               <input
@@ -80,12 +80,12 @@ function Pin(props) {
                 name="Allow Un-Freeze"
                 value="Yes"
               />{" "}
-              <label for="allowUnfreeze"> Allow Un-Freeze</label>
+              <label htmlFor="allowUnfreeze"> Allow Un-Freeze</label>
               <br></br>
-              <label for="addTimeout"> Timeout (in seconds): </label> {"  "}
+              <label htmlFor="addTimeout"> Timeout (in seconds): </label> {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="addTimeout"
                 name="addTimeout"
                 value="30"
@@ -99,14 +99,14 @@ function Pin(props) {
               name="Add to Filecoin Network"
               value="Yes"
             />
-            <label for="enableFilecoinStorage"> Add to Filecoin Network</label>
+            <label htmlFor="enableFilecoinStorage"> Add to Filecoin Network</label>
             <br></br>
             <div id="filecoinOptions">
-              <label for="replicationFactor"> Replication Factor: </label>{" "}
+              <label htmlFor="replicationFactor"> Replication Factor: </label>{" "}
               {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="replicationFactor"
                 name="repFactor"
                 value="1"
@@ -114,29 +114,29 @@ function Pin(props) {
               />
               <br />
               <br />
-              <label for="minDealDuration">
+              <label htmlFor="minDealDuration">
                 {" "}
                 Minimum Deal Duration (in seconds):{" "}
               </label>{" "}
               {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="minDealDuration"
                 name="repFactor"
-                value="1000"
+                value="700000"
                 placeholder="Minimum Deal Duration"
               />
               <br />
               <br />
-              <label for="excludedMinersList">
+              <label htmlFor="excludedMinersList">
                 {" "}
                 Excluded Miners List:{" "}
               </label>{" "}
               {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="excludedMinersList"
                 name="addTimeout"
                 value=""
@@ -144,11 +144,11 @@ function Pin(props) {
               />
               <br />
               <br />
-              <label for="trustedMinersList"> Trusted Miners List: </label>{" "}
+              <label htmlFor="trustedMinersList"> Trusted Miners List: </label>{" "}
               {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="trustedMinersList"
                 name="trustedMinersList"
                 value=""
@@ -156,10 +156,10 @@ function Pin(props) {
               />
               <br />
               <br />
-              <label for="countryCodesList"> Country Codes List: </label> {"  "}
+              <label htmlFor="countryCodesList"> Country Codes List: </label> {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="countryCodesList"
                 name="countryCodesList"
                 value=""
@@ -168,14 +168,14 @@ function Pin(props) {
               <br />
               <br />
               <input type="checkbox" id="renew" name="renew" value="Yes" />{" "}
-              <label for="renew"> Renew</label>
+              <label htmlFor="renew"> Renew</label>
               <br />
               <br />
               <div id="renewOptions">
-                <label for="threshold"> Threshold: </label> {"  "}
+                <label htmlFor="threshold"> Threshold: </label> {"  "}
                 <input
                   type="text"
-                  class="form-control"
+                  className="form-control"
                   id="threshold"
                   name="threshold"
                   value="0"
@@ -184,10 +184,10 @@ function Pin(props) {
               </div>
               <br />
               <br />
-              <label for="maxPrice"> Max Price: </label> {"  "}
+              <label htmlFor="maxPrice"> Max Price: </label> {"  "}
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 id="maxPrice"
                 name="maxPrice"
                 value="0"
@@ -202,7 +202,7 @@ function Pin(props) {
               name="repairable"
               value="Yes"
             />{" "}
-            <label for="repairable"> Repairable</label>
+            <label htmlFor="repairable"> Repairable</label>
           </div>
         </div>
       </div>
@@ -252,6 +252,7 @@ function Pin(props) {
           fileReader.onload = function () {
             arrayBuffer = this.result;
             uint8Array = new Uint8Array(arrayBuffer);
+            console.warn(user.ffsInfo);
             addFileToFFS({
               fileBuffer: uint8Array,
               withOverrideConfig: true,
@@ -275,7 +276,7 @@ function Pin(props) {
                       enabled: renew,
                       threshold: parseInt(threshold),
                     },
-                    addr: user.ffsInfo.defaultConfig.cold.filecoin.addr,
+                    addr: user.ffsInfo.defaultStorageConfig.cold.filecoin.addr,
                     maxPrice: parseInt(maxPrice),
                   },
                 },
